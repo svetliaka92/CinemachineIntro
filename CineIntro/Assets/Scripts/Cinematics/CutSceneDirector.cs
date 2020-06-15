@@ -5,25 +5,26 @@ using UnityEngine.Playables;
 
 public class CutSceneDirector : MonoBehaviour
 {
-    [SerializeField] private CinematicTrigger _cinematicTrigger;
+    [SerializeField] protected CinematicTrigger _cinematicTrigger;
 
-    private PlayableDirector _playableDirector;
+    protected PlayableDirector _playableDirector;
 
-    private bool _isCutSceneTriggered;
+    protected bool _isCutSceneTriggered;
 
     private void Awake()
     {
         _playableDirector = GetComponent<PlayableDirector>();
 
-        _cinematicTrigger.cutSceneTriggeredEvent += OnCutSceneTriggered;
+        if (_cinematicTrigger)
+            _cinematicTrigger.cutSceneTriggeredEvent += OnCutSceneTriggered;
     }
 
-    public void OnCutSceneTriggered()
+    public virtual void OnCutSceneTriggered()
     {
-        if (!_isCutSceneTriggered)
-        {
-            _isCutSceneTriggered = true;
-            _playableDirector.Play();
-        }
+        if (_isCutSceneTriggered)
+            return;
+
+        //_isCutSceneTriggered = true;
+        _playableDirector.Play();
     }
 }
