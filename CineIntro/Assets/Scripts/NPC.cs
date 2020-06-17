@@ -6,7 +6,8 @@ public class NPC : MonoBehaviour
 
     private void Start()
     {
-        lineCanvas.SetActive(false);
+        if (lineCanvas)
+            lineCanvas.SetActive(false);
     }
 
     public void ShowText(bool flag = true)
